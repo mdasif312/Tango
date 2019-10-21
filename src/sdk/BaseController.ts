@@ -2,7 +2,7 @@ import * as express from 'express';
 import 'reflect-metadata';
 import BaseModel from "./models/base.model";
 import BasePresenter from "./BasePresenter";
-import {CommonEndPoints} from "./utils/CommonEndPoints";
+import CommonEndPoints from "./utils/CommonEndPoints";
 
 class BaseController<T extends BaseModel> {
     public endPoint;

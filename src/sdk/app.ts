@@ -6,6 +6,7 @@ import loggerMiddleware from "./middlewares/Logger";
 import BaseController from "./BaseController";
 import BaseModel from "./models/base.model";
 import errorHandlerMiddleware from "./middlewares/ErrorHandler";
+import analyticsMiddleware from "./middlewares/AnalyticsHandler";
 
 class App {
     public app: express.Application;
@@ -38,6 +39,7 @@ class App {
 
     private initializeErrorHandler() {
         this.app.use(errorHandlerMiddleware);
+
     }
 
     private initializeControllers(controllers: BaseController<BaseModel>[]) {
