@@ -5,7 +5,7 @@ import * as mongoose from 'mongoose';
 import loggerMiddleware from "./middlewares/Logger";
 import BaseController from "./BaseController";
 import BaseModel from "./models/base.model";
-import analyticsMiddleWare from "./middlewares/Analytics";
+import errorHandlerMiddleware from "./middlewares/ErrorHandler";
 
 class App {
     public app: express.Application;
@@ -16,7 +16,7 @@ class App {
         App.connectToTheDatabase();
         this.initializeMiddlewares();
         this.initializeControllers(controllers);
-        this.initializeAnalytics();
+        this.initializeErrorHandler();
     }
 
     public listen() {
@@ -36,8 +36,8 @@ class App {
         );
     }
 
-    private initializeAnalytics() {
-        this.app.use(analyticsMiddleWare);
+    private initializeErrorHandler() {
+        this.app.use(errorHandlerMiddleware);
     }
 
     private initializeControllers(controllers: BaseController<BaseModel>[]) {

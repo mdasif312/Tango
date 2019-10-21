@@ -13,7 +13,7 @@ class BasePresenter<T extends BaseModel> {
     }
 
 
-    public find = (request: express.Request, response: express.Response) => {
+    public find = (request: express.Request, response: express.Response,next) => {
         this.baseModel.getModel().find(request.body.query)
             .then((data) => {
                 if (data != null && data.length != 0)
@@ -73,7 +73,7 @@ class BasePresenter<T extends BaseModel> {
                     if (successResponse) {
                         response.json(BaseResponse.getSuccessResponse(null));
                     } else {
-                        response.send(BaseResponse.getStandardErrorResponse());
+                        response.json(BaseResponse.getStandardErrorResponse());
                     }
                 });
         else
