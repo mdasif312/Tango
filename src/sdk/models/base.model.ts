@@ -11,7 +11,7 @@ class BaseModel {
         this.schema = new mongoose.Schema(schema, {versionKey: false});
     }
 
-    getModel() {
+    getModelSchema() {
         return mongoose.model<BaseInterface & mongoose.Document>(this.collectionName, this.schema);
     }
 }
