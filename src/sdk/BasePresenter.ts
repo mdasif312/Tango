@@ -40,7 +40,7 @@ class BasePresenter {
     public modify = (request: express.Request, response: express.Response) => {
         // const id = request.params.id;
         if (request.body.id != null) {
-            delete request.body.id;     //removing id from body data for updation
+            delete request.body.id;     //removing id from body data for update
             const postData: BaseModel = request.body;
             this.baseModel.getModelSchema().findByIdAndUpdate(request.body.id, postData, {new: true})
                 .then((data) => {

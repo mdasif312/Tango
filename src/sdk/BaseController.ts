@@ -3,7 +3,7 @@ import BaseModel from "./models/base.model";
 import BasePresenter from "./BasePresenter";
 import CommonEndPoints from "./utils/CommonEndPoints";
 import validationMiddleware from "./middlewares/ValidationMiddleware";
-import CreateBookDto from "../book.tdo";
+import IDDto from "./dto/id.dto";
 
 abstract class BaseController<BM extends BaseModel, BP extends BasePresenter> {
     private readonly endPoint;
@@ -34,17 +34,17 @@ abstract class BaseController<BM extends BaseModel, BP extends BasePresenter> {
     private initializeRoutes() {
         this.basePresenter = this.attachPresenter();
         this.router.post(this.endPoint + CommonEndPoints.CREATE, this.basePresenter.create);
-        this.router.post(this.endPoint + CommonEndPoints.FIND, validationMiddleware(CreateBookDto), this.basePresenter.find);
-        this.router.post(this.endPoint + CommonEndPoints.FIND_ONE, this.basePresenter.findOne);
-        this.router.post(this.endPoint + CommonEndPoints.MODIFY, this.basePresenter.modify);
+        this.router.post(this.endPoint + CommonEndPoints.FIND, this.basePresenter.find);
+        this.router.post(this.endPoint + CommonEndPoints.FIND_ONE, validationMiddleware(IDDto), this.basePresenter.findOne);
+        this.router.post(this.endPoint + CommonEndPoints.MODIFY, validationMiddleware(IDDto), this.basePresenter.modify);
         this.router.post(this.endPoint + CommonEndPoints.DELETE_DATA, this.basePresenter.deleteData);
 
     }
 
-    //
-    // public addRouteWithValidator(endPoint, validationMiddleWare, callback): void {
-    //     this.router.post(this.endPoint + "/" + endPoint, validationMiddleWare, callback);
-    // }
+
+    public addRouteWithValidator(endPoint, validationMiddleWare, callback): void {
+        this.router.post(this.endPoint + "/" + endPoint, validationMiddleWare, callback);
+    }
 
     public addRoute(endPoint, callback) {
         this.router.post(this.endPoint + "/" + endPoint, callback);
