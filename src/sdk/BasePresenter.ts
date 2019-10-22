@@ -2,11 +2,13 @@ import * as express from 'express';
 
 import BaseModel from "./models/base.model";
 import BaseResponse from "./responses/BaseResponse";
+import InvalidParamsException from "./exceptions/InvalidParamsException";
+import StandardException from "./exceptions/StandardException";
 
 class BasePresenter {
     public baseModel: BaseModel;
 
-    constructor( baseModel: BaseModel) {
+    constructor(baseModel: BaseModel) {
         this.baseModel = baseModel;
     }
 
@@ -32,7 +34,7 @@ class BasePresenter {
                         response.json(BaseResponse.getEmptyResponse());
                 });
         else
-            response.json(BaseResponse.invalidParamsErrorResponse());
+            throw new InvalidParamsException();
     };
 
     public modify = (request: express.Request, response: express.Response) => {
@@ -45,10 +47,10 @@ class BasePresenter {
                     if (data != null)
                         response.json(BaseResponse.getSuccessResponse(data));
                     else
-                        response.json(BaseResponse.getStandardErrorResponse());
+                        throw new StandardException();
                 });
         } else
-            response.json(BaseResponse.invalidParamsErrorResponse());
+            throw  new InvalidParamsException();
     };
 
     public create = (request: express.Request, response: express.Response) => {
@@ -59,7 +61,7 @@ class BasePresenter {
                 if (savedPost != null)
                     response.json(BaseResponse.getSuccessResponse(savedPost));
                 else
-                    response.json(BaseResponse.getStandardErrorResponse());
+                    throw new StandardException();
             });
     };
 
@@ -71,11 +73,11 @@ class BasePresenter {
                     if (successResponse) {
                         response.json(BaseResponse.getSuccessResponse(null));
                     } else {
-                        response.json(BaseResponse.getStandardErrorResponse());
+                        throw new StandardException();
                     }
                 });
         else
-            response.json(BaseResponse.invalidParamsErrorResponse());
+            throw new InvalidParamsException();
     };
 }
 
