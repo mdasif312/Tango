@@ -1,8 +1,9 @@
 import * as mongoose from 'mongoose';
 import BaseInterface from "./base.interface";
+import {IsString} from 'class-validator';
 
 class BaseModel {
-
+    @IsString()
     collectionName: string;
     schema: any;
 

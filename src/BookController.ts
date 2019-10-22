@@ -20,8 +20,6 @@ class BookController extends BaseController<Book> {
             this.getModel().getModelSchema().update({});
         });
     }
-
-
 }
 
 export default BookController;

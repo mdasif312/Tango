@@ -2,9 +2,10 @@ import * as express from 'express';
 
 import BaseModel from "./models/base.model";
 import BaseResponse from "./responses/BaseResponse";
+import HttpException from "./exceptions/HttpException";
 
 class BasePresenter<T extends BaseModel> {
-    public path ;
+    public path;
     public baseModel: BaseModel;
 
     constructor(path: string, baseModel: BaseModel) {
@@ -13,11 +14,11 @@ class BasePresenter<T extends BaseModel> {
     }
 
 
-    public find = (request: express.Request, response: express.Response) => {
+    public find = (request: express.Request, response: express.Response, next) => {
         this.baseModel.getModelSchema().find(request.body.query)
             .then((data) => {
                 if (data != null && data.length != 0)
-                    response.json(BaseResponse.getSuccessResponse(data));
+                    next(new HttpException(102, 'Post not found'));
                 else
                     response.json(BaseResponse.getEmptyResponse());
             });
