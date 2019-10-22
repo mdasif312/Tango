@@ -6,16 +6,18 @@ import loggerMiddleware from "./middlewares/Logger";
 import BaseController from "./BaseController";
 import BaseModel from "./models/base.model";
 import errorHandlerMiddleware from "./middlewares/ErrorHandler";
+import {Server} from "@overnightjs/core";
+import pageNotFoundHandler from "./middlewares/PageNotFoundHandler";
 
 class App {
     public app: express.Application;
 
     constructor(controllers: BaseController<BaseModel>[]) {
         this.app = express();
-
         App.connectToTheDatabase();
         this.initializeMiddlewares();
         this.initializeControllers(controllers);
+        this.initializePageNotFoundHandler();
         this.initializeErrorHandler();
     }
 
@@ -23,6 +25,10 @@ class App {
         this.app.listen(process.env.PORT, () => {
             console.log(`App listening on the port ${process.env.PORT}`);
         });
+    }
+
+    private initializePageNotFoundHandler() {
+        this.app.use(pageNotFoundHandler);
     }
 
     private initializeMiddlewares() {
@@ -42,6 +48,7 @@ class App {
     }
 
     private initializeControllers(controllers: BaseController<BaseModel>[]) {
+
         controllers.forEach((controller) => {
             this.app.use('/', controller.router);
         });

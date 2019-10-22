@@ -1,12 +1,14 @@
 import * as express from 'express';
 import HttpException from "../exceptions/HttpException";
 
-function errorHandlerMiddleware(error: HttpException, request: express.Request, response: express.Response, next: express.nextFunction) {
-    const status = error.status || 500;
+function errorHandlerMiddleware(error: HttpException, request: express.Request, response: express.Response, next) {
+    const opStatus = error.opStatus || 500;
     const message = error.message || 'Something went wrong';
+    const result = error.result || 0;
     response.send({
-        status,
+        opStatus,
         message,
+        result
     });
 }
 

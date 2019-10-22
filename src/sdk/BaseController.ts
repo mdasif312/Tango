@@ -1,9 +1,12 @@
 import * as express from 'express';
-import 'reflect-metadata';
 import BaseModel from "./models/base.model";
 import BasePresenter from "./BasePresenter";
 import CommonEndPoints from "./utils/CommonEndPoints";
+import validationMiddleware from "./middlewares/ValidationMiddleware";
+import CreateBookDto from "../book.tdo";
+import {Controller} from "@overnightjs/core";
 
+@Controller("/")
 class BaseController<T extends BaseModel> {
     public endPoint;
     public router = express.Router();
@@ -27,7 +30,7 @@ class BaseController<T extends BaseModel> {
     //mapping router with functions
     private initializeRoutes() {
         this.router.post(this.endPoint + CommonEndPoints.CREATE, this.basePresenter.create);
-        this.router.post(this.endPoint + CommonEndPoints.FIND, this.basePresenter.find);
+        this.router.post(this.endPoint + CommonEndPoints.FIND, validationMiddleware(CreateBookDto), this.basePresenter.find);
         this.router.post(this.endPoint + CommonEndPoints.FIND_ONE, this.basePresenter.findOne);
         this.router.post(this.endPoint + CommonEndPoints.MODIFY, this.basePresenter.modify);
         this.router.post(this.endPoint + CommonEndPoints.DELETE_DATA, this.basePresenter.deleteData);

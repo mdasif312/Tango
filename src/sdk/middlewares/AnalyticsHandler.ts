@@ -1,6 +1,3 @@
-import * as express from 'express';
-import BaseResponse from "../responses/BaseResponse";
-
 function analyticsMiddleware(data, request, response) {
 
     console.log("Inside analytics middleware");

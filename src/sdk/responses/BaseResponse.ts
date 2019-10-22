@@ -1,3 +1,5 @@
+import HttpException from "../exceptions/HttpException";
+
 class BaseResponse {
 
     result: number;
@@ -11,11 +13,11 @@ class BaseResponse {
     }
 
     static getStandardErrorResponse() {
-        return new BaseResponse(0, "Something wen't wrong", null);
+        return new HttpException(0, 200, "Something wen't wrong");
     }
 
     static invalidParamsErrorResponse() {
-        return new BaseResponse(0, "Invalid parameters", null);
+        return new HttpException(0, 201, "Invalid parameters");
     }
 
     static getSuccessResponse(data: any) {
@@ -24,6 +26,10 @@ class BaseResponse {
 
     static getEmptyResponse() {
         return new BaseResponse(1, "No data found", null);
+    }
+
+    static pageNotFoundErrorResponse() {
+        return new HttpException(0, 404, "Page Not found");
     }
 }
 
