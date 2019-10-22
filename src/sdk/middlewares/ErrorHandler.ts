@@ -5,10 +5,10 @@ function errorHandlerMiddleware(error: HttpException, request: express.Request, 
     const opStatus = error.opStatus || 500;
     const message = error.message || 'Something went wrong';
     const result = error.result || 0;
-    response.send({
-        opStatus,
-        message,
-        result
+    response.json({
+        opStatus: opStatus,
+        message: message,
+        result: result
     });
 }
 

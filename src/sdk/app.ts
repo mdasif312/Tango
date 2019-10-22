@@ -8,11 +8,12 @@ import BaseModel from "./models/base.model";
 import errorHandlerMiddleware from "./middlewares/ErrorHandler";
 import {Server} from "@overnightjs/core";
 import pageNotFoundHandler from "./middlewares/PageNotFoundHandler";
+import BasePresenter from "./BasePresenter";
 
 class App {
     public app: express.Application;
 
-    constructor(controllers: BaseController<BaseModel>[]) {
+    constructor(controllers: BaseController<BaseModel, BasePresenter>[]) {
         this.app = express();
         App.connectToTheDatabase();
         this.initializeMiddlewares();
@@ -47,7 +48,7 @@ class App {
 
     }
 
-    private initializeControllers(controllers: BaseController<BaseModel>[]) {
+    private initializeControllers(controllers: BaseController<BaseModel, BasePresenter>[]) {
 
         controllers.forEach((controller) => {
             this.app.use('/', controller.router);

@@ -8,7 +8,6 @@ class Book extends BaseModel {
     };
 
     constructor() {
-        console.log("Book model const");
         super(Book.collectionName, Book.schema);
 
     }

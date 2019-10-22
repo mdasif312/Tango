@@ -3,12 +3,10 @@ import * as express from 'express';
 import BaseModel from "./models/base.model";
 import BaseResponse from "./responses/BaseResponse";
 
-class BasePresenter<T extends BaseModel> {
-    public path;
+class BasePresenter {
     public baseModel: BaseModel;
 
-    constructor(path: string, baseModel: BaseModel) {
-        this.path = path;
+    constructor( baseModel: BaseModel) {
         this.baseModel = baseModel;
     }
 
@@ -19,7 +17,7 @@ class BasePresenter<T extends BaseModel> {
                 if (data != null && data.length != 0)
                     response.json(BaseResponse.getSuccessResponse(data));
                 else
-                response.json(BaseResponse.getEmptyResponse());
+                    response.json(BaseResponse.getEmptyResponse());
             });
     };
 
